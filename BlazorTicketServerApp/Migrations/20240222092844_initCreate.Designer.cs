@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorTicketServerApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240222085811_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240222092844_initCreate")]
+    partial class initCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
