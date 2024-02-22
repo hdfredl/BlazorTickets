@@ -1,7 +1,13 @@
 ﻿@page "/"
-
+@using BlazorTicketClientApp.Components
+@using BlazorTicketClientApp.Models
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+@foreach(TicketViewModel ticket in DummyData.Tickets)
+{
+	<Ticket TicketModel="ticket"/>
+}
 
-Welcome to your new app.
+@code {
+
+}
