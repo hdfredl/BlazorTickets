@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BlazorTicketServerApp.Database;
+using BlazorTicketServerApp.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using Shared.Models;
 
 namespace BlazorTicketServerApp.Controllers
@@ -7,6 +9,13 @@ namespace BlazorTicketServerApp.Controllers
     [ApiController]
     public class TicketsController : ControllerBase
     {
+        private readonly AppDbContext _context;
+
+        public TicketsController(AppDbContext dbContext)
+        {
+            _context = dbContext;
+
+        }
         public static List<TicketModel> Tickets { get; set; } = new()
         {
             new TicketModel()
@@ -42,47 +51,48 @@ namespace BlazorTicketServerApp.Controllers
             return Ok(Tickets);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> PostTicketAsync(TicketModel ticket)
+        {
 
+            Repository repo = new Repository(_context);
 
-
-        //[HttpPost]
-        //public ActionResult<TicketModel> PostTicket(TicketModel ticket)
-        //{
-        //    if (ticket != null)
-        //    {
-        //        TicketModel model = new TicketModel()
-        //        {
-        //            Id = ticket.Id,
-        //            Title = ticket.Title,
-        //            Description = ticket.Description,
-        //            SubmittedBy = ticket.SubmittedBy,
-        //            IsResolved = ticket.IsResolved,
-
-        //        };
-        //    }
-        //}
-
-
-
-
-        // TagModel
-        //public int Id { get; set; }
-        //public string Name { get; set; } // Exempel: "CSharp", "JavaScript"
-        //public List<TicketTag> TicketTags { get; set; } = new List<TicketTag>();
-
-        //ResponseModel
-        //public int Id { get; set; }
-        //public string Response { get; set; }
-        //public string SubmittedBy { get; set; }
-        //public int TicketId { get; set; }
-        //public TicketModel Ticket { get; set; }
-
-        //TicketModel
-        //public int Id { get; set; }
-        //public string Title { get; set; }
-        //public string Description { get; set; }
-        //public string SubmittedBy { get; set; } // Användarnamn eller e-post
-        //public bool IsResolved { get; set; }
-
+            if (ticket != null)
+            {
+                TicketModel model = new TicketModel()
+                {
+                    Id = ticket.Id,
+                    Title = ticket.Title,
+                    Description = ticket.Description,
+                    SubmittedBy = ticket.SubmittedBy,
+                    IsResolved = ticket.IsResolved,
+                };
+            };
+            await repo.AddTicketAsync(ticket);
+            _context.SaveChanges();
+            return Ok(ticket);
+        }
     }
+
+
+    // TagModel
+    //public int Id { get; set; }
+    //public string Name { get; set; } // Exempel: "CSharp", "JavaScript"
+    //public List<TicketTag> TicketTags { get; set; } = new List<TicketTag>();
+
+    //ResponseModel
+    //public int Id { get; set; }
+    //public string Response { get; set; }
+    //public string SubmittedBy { get; set; }
+    //public int TicketId { get; set; }
+    //public TicketModel Ticket { get; set; }
+
+    //TicketModel
+    //public int Id { get; set; }
+    //public string Title { get; set; }
+    //public string Description { get; set; }
+    //public string SubmittedBy { get; set; } // Användarnamn eller e-post
+    //public bool IsResolved { get; set; }
+
 }
+
