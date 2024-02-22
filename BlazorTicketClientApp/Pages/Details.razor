@@ -1,0 +1,21 @@
+﻿@page "/details/{id:int}"
+@using BlazorTicketClientApp.Models
+@using Shared.Models
+
+<h3>Ticket</h3>
+
+@if(ticket != null)
+{
+	<h1>@ticket.Title</h1>
+}
+
+@code {
+	[Parameter]
+	public int? Id { get; set; }
+	private TicketViewModel? ticket;
+
+	protected override void OnParametersSet()
+	{
+		ticket = DummyData.Tickets.FirstOrDefault(t => t.Id == Id);
+	}
+}

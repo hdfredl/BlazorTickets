@@ -3,11 +3,35 @@
 @using BlazorTicketClientApp.Models
 <PageTitle>Home</PageTitle>
 
-@foreach(TicketViewModel ticket in DummyData.Tickets)
-{
-	<Ticket TicketModel="ticket"/>
-}
+<div id="main-body">
+	<h1 class="ticket-header">All tickets</h1>
+	<section class="all-tickets">
+		@foreach (TicketViewModel ticket in DummyData.Tickets)
+		{
+			<Ticket TicketModel="ticket"/>
+		}
+	</section>
+	<button @onclick="CreateTicket" class="create-ticket-btn">Create a new ticket</button>
+	@if(isCreatingTicket)
+	{
+		<h1>Now you can create a ticket!</h1>
+	}
+</div>
+
+
+
+
 
 @code {
+	private bool isCreatingTicket;
 
+	protected override async Task OnInitializedAsync()
+	{
+		isCreatingTicket = false;
+	}
+
+	private void CreateTicket()
+	{
+		isCreatingTicket = !isCreatingTicket;
+	}
 }

@@ -7,9 +7,14 @@
 else
 {
 	<div class="ticket">
-		<h3 class="ticket-title">@TicketModel.Title</h3>
-		<p><strong>Description</strong>@TicketModel.Description</p>
-		<p><em>Submitted by:</em> @TicketModel.SubtmittedBy</p>
+		<div class="ticket-info">
+			<h3 class="ticket-title">@TicketModel.Title</h3>
+			<p><em>Submitted by:</em> @TicketModel.SubtmittedBy</p>
+			<a href="/details/@TicketModel.Id">Read more</a>
+		</div>
+		<div class="ticket-desc">
+			<p><strong>Description: </strong>@TicketModel.Description</p>
+		</div>
 	</div>
 	
 }

@@ -1,0 +1,14 @@
+﻿#main-body {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+
+.all-tickets {
+    width:80%;
+}
+
+.create-ticket-btn {
+    margin-top:1rem
+}
