@@ -35,8 +35,4 @@ public class AppDbContext : DbContext
 		.HasForeignKey(r => r.TicketId);
 	}
 
-
-
-
-
 }
