@@ -84,8 +84,32 @@ public class Repository
 		await _context.SaveChangesAsync();
 	}
 
+	// Ta bort en response
+	public async Task RemoveResponseAsync(int id)
+	{
+		// Hämta en response med Id
+		ResponseModel? deleteResponse = await _context.Responses.FirstOrDefaultAsync(r => r.Id == id);
 
+		if (deleteResponse != null)
+		{
+			_context.Responses.Remove(deleteResponse);
+			await _context.SaveChangesAsync();
+		}
+	}
 
+	// Uppdatera en respons
+	public async Task UpdateResponseAsync(ResponseModel response)
+	{
+		ResponseModel? updateResponse = await _context.Responses.FirstOrDefaultAsync(r => r.Id == response.Id);
+
+		// Uppdatera bara responses i en ticket.
+		if (updateResponse != null)
+		{
+			updateResponse.Response = response.Response;
+
+			await _context.SaveChangesAsync();
+		}
+	}
 
 	// -------------------------------------------------------------------------------------------------
 
