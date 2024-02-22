@@ -1,25 +1,78 @@
 ﻿@page "/"
 @using Shared.Models
 
-<h1>Hello, world!</h1>
+<h1>Hello, please submit a ticket...</h1>
 
 Welcome to your new app.
+<br />
 
+    <!--Skapa en ticket, så input fält för modellerna osv -->
+<div>
+    <label>Title:</label>
+    <input type="text" id="title" />
+    <br />
+</div>
+<br />
+<div>
+    <label>Description:</label>
+    <textarea id="description"></textarea>
+    <br />
+</div>
+<br />
+<div>
+    <label>Submitted By:</label>
+    <input type="text" id="submittedBy" />
+    <br />
+</div>
+<br />
+<div>
+    <label>Is Resolved:</label>
+    <input type="checkbox" id="isResolved"/>
+    <br />
+</div>
 
-<!-- Hämta o visa alla tickets från databasen-->
+<div>
+    <br />
+    <label>Select a Tag:</label>
+    <select id="selectedTag" @bind="selectedTag">
+        <option value="">---</option>
+        @foreach (Tag tag in Enum.GetValues(typeof(Tag)))
+        {
+            <option value="@tag">@tag.ToString()</option>
+        }
+    </select>
+    <br />
+</div>
+
+<br />
+  <br />
+
+<button class="btn btn-primary" @onclick="CreateTicket">Create Ticket</button>
+
+<div>
+<!-- Hämta o visa alla tickets från databasen, här kanske eller i ticketmanagement page.. hmm-->
+
+</div>
 
 
 @code {
-
-
+    private Tag selectedTag;
 
     // Tickets ska vara sorterade kronologist
 
 
 
-    // Skapa en ticket, så input fält för modellerna osv
+
 
     // Utveckla en återanvändbar komponent
+
+    // Skapa en ticket metod:
+    private async Task CreateTicket()
+    {
+
+    }
+
+
 
     // Vid klick navigera till TicketManagement
 
