@@ -11,7 +11,6 @@ namespace BlazorTicketServerApp.Controllers
         {
             new TagModel()
             {
-
                 Id = 1,
                 Name = "CSharp"
             },

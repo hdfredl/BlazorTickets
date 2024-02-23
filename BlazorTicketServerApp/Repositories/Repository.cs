@@ -34,6 +34,7 @@ public class Repository
     }
 
     //Delete:a en ticket
+    // Kommer detta att deleta responsen och taggen på också? Vi får kolla på Deletebehaviour på databasen
     public async Task RemoveTicketAsync(int id)
     {
         // Hämta en ticket med Id
@@ -60,7 +61,6 @@ public class Repository
         await _context.SaveChangesAsync();
     }
 
-
     // ------------------------------------------------------------------------------------------------
 
     // Responses
@@ -83,6 +83,12 @@ public class Repository
         _context.Responses.Add(response);
         await _context.SaveChangesAsync();
     }
+
+    // -------------------------------------------------------------------------------------------------
+
+    // Tag ändra Tag name o ta bort?
+
+
 
     // Ta bort en response
     public async Task RemoveResponseAsync(int id)
