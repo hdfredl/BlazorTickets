@@ -7,8 +7,6 @@ namespace BlazorTicketServerApp.Repositories;
 public class Repository
 {
     private readonly AppDbContext _context;
-
-
     public Repository(AppDbContext context)
     {
         _context = context;
@@ -34,7 +32,6 @@ public class Repository
     }
 
     //Delete:a en ticket
-    // Kommer detta att deleta responsen och taggen på också? Vi får kolla på Deletebehaviour på databasen
     public async Task RemoveTicketAsync(int id)
     {
         // Hämta en ticket med Id
@@ -56,7 +53,6 @@ public class Repository
         if (updateTicket != null)
         {
             updateTicket.Description = ticket.Description;
-
         }
         await _context.SaveChangesAsync();
     }

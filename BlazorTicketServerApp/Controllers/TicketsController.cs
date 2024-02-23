@@ -9,12 +9,10 @@ namespace BlazorTicketServerApp.Controllers
     [ApiController]
     public class TicketsController : ControllerBase
     {
-        private readonly AppDbContext _context;
-
+        private readonly Repository repo;
         public TicketsController(AppDbContext dbContext)
         {
-            _context = dbContext;
-
+            repo = new(dbContext);
         }
         public static List<TicketModel> Tickets { get; set; } = new()
         {
@@ -52,18 +50,23 @@ namespace BlazorTicketServerApp.Controllers
             },
         };
 
-        [HttpGet]
+        [HttpGet("GetAllTickets")]
         public ActionResult<List<TicketModel>> GetTickets()
         {
+            repo.GetAllTicketsAsync().Wait();
+            return Ok(Tickets);
+        }
+
+        [HttpGet("GetTicketById")]
+        public async Task<IActionResult> GetTicketById(int id)
+        {
+            await repo.GetTicketByIdAsync(id);
             return Ok(Tickets);
         }
 
         [HttpPost("PostTicket")]
         public async Task<IActionResult> PostTicketAsync(TicketModel ticket)
         {
-
-            Repository repo = new Repository(_context);
-
             if (ticket != null)
             {
                 TicketModel model = new TicketModel()
@@ -80,12 +83,25 @@ namespace BlazorTicketServerApp.Controllers
             return BadRequest();
         }
 
+        [HttpDelete]
+        public async Task<IActionResult> DeleteTicketAsync(int id)
+        {
+            await repo.RemoveTicketAsync(id);
+            return Ok();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateTicket(TicketModel ticket)
+        {
+            await repo.UpdateTicket(ticket);
+            return Ok();
+        }
+
+
         //[HttpPost("PostResponse")]
         //public async Task<IActionResult> PostTicketAsync(ResponseModel response)
         //{
-
         //}
-
 
         // TagModel
         //public int Id { get; set; }
