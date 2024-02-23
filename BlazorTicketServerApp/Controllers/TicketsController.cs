@@ -67,20 +67,13 @@ namespace BlazorTicketServerApp.Controllers
         [HttpPost("PostTicket")]
         public async Task<IActionResult> PostTicketAsync(TicketModel ticket)
         {
-            if (ticket != null)
+            if (ticket.Title == null || ticket.Description == null)
             {
-                TicketModel model = new TicketModel()
-                {
-                    Id = ticket.Id,
-                    Title = ticket.Title,
-                    Description = ticket.Description,
-                    SubmittedBy = ticket.SubmittedBy,
-                    IsResolved = ticket.IsResolved,
-                };
-                await repo.AddTicketAsync(ticket);
-                return Ok(ticket);
-            };
-            return BadRequest();
+                return BadRequest("Ticket must contain title and description!");
+            }
+
+            await repo.AddTicketAsync(ticket);
+            return Ok(ticket);
         }
 
         [HttpDelete]
