@@ -8,9 +8,11 @@ else
 {
 	<div class="ticket">
 		<div class="ticket-info">
-			<h3 class="ticket-title">@TicketModel.Title</h3>
-			<p><em>Submitted by:</em> @TicketModel.SubtmittedBy</p>
-			<a href="/details/@TicketModel.Id">Read more</a>
+			<p>
+				<strong class="ticket-title">@TicketModel.Title</strong>
+				<em class="ticket-submit">Submitted by:</em> @TicketModel.SubtmittedBy
+				<a class="ticket-link" href="/details/@TicketModel.Id">Read more</a>
+			</p>
 		</div>
 		<div class="ticket-desc">
 			<p><strong>Description: </strong>@TicketModel.Description</p>

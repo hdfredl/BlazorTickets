@@ -1,6 +1,8 @@
 ﻿@page "/"
 @using BlazorTicketClientApp.Components
 @using BlazorTicketClientApp.Models
+@using BlazorTicketClientApp.Services
+@inject ITicketsService ticketsService
 <PageTitle>Home</PageTitle>
 
 <div id="main-body">
@@ -24,10 +26,12 @@
 
 @code {
 	private bool isCreatingTicket;
+	private List<TicketViewModel> tickets;
 
 	protected override async Task OnInitializedAsync()
 	{
 		isCreatingTicket = false;
+		tickets = await ticketsService.GetAllAsync();
 	}
 
 	private void CreateTicket()
