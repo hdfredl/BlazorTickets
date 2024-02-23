@@ -25,7 +25,14 @@ namespace BlazorTicketServerApp.Controllers
                 Description = "lorem 20",
                 SubmittedBy = "Calle",
                 IsResolved = false,
-
+                TicketTags = new List<TicketTag>
+                {
+                    new TicketTag { TagId = (int)Tag.CSharp}
+                },
+                Responses = new List<ResponseModel>
+                {
+                    new ResponseModel { Response = "test", SubmittedBy = "fredrik" }
+                }
             },
             new TicketModel()
             {
@@ -51,7 +58,7 @@ namespace BlazorTicketServerApp.Controllers
             return Ok(Tickets);
         }
 
-        [HttpPost]
+        [HttpPost("PostTicket")]
         public async Task<IActionResult> PostTicketAsync(TicketModel ticket)
         {
 
@@ -67,32 +74,38 @@ namespace BlazorTicketServerApp.Controllers
                     SubmittedBy = ticket.SubmittedBy,
                     IsResolved = ticket.IsResolved,
                 };
+                await repo.AddTicketAsync(ticket);
+                return Ok(ticket);
             };
-            await repo.AddTicketAsync(ticket);
-            _context.SaveChanges();
-            return Ok(ticket);
+            return BadRequest();
         }
+
+        //[HttpPost("PostResponse")]
+        //public async Task<IActionResult> PostTicketAsync(ResponseModel response)
+        //{
+
+        //}
+
+
+        // TagModel
+        //public int Id { get; set; }
+        //public string Name { get; set; } // Exempel: "CSharp", "JavaScript"
+        //public List<TicketTag> TicketTags { get; set; } = new List<TicketTag>();
+
+        //ResponseModel
+        //public int Id { get; set; }
+        //public string Response { get; set; }
+        //public string SubmittedBy { get; set; }
+        //public int TicketId { get; set; }
+        //public TicketModel Ticket { get; set; }
+
+        //TicketModel
+        //public int Id { get; set; }
+        //public string Title { get; set; }
+        //public string Description { get; set; }
+        //public string SubmittedBy { get; set; } // Användarnamn eller e-post
+        //public bool IsResolved { get; set; }
+
     }
-
-
-    // TagModel
-    //public int Id { get; set; }
-    //public string Name { get; set; } // Exempel: "CSharp", "JavaScript"
-    //public List<TicketTag> TicketTags { get; set; } = new List<TicketTag>();
-
-    //ResponseModel
-    //public int Id { get; set; }
-    //public string Response { get; set; }
-    //public string SubmittedBy { get; set; }
-    //public int TicketId { get; set; }
-    //public TicketModel Ticket { get; set; }
-
-    //TicketModel
-    //public int Id { get; set; }
-    //public string Title { get; set; }
-    //public string Description { get; set; }
-    //public string SubmittedBy { get; set; } // Användarnamn eller e-post
-    //public bool IsResolved { get; set; }
-
 }
 
