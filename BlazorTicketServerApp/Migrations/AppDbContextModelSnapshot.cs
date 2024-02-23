@@ -45,6 +45,15 @@ namespace BlazorTicketServerApp.Migrations
                     b.HasIndex("TicketId");
 
                     b.ToTable("Responses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Response = "noob",
+                            SubmittedBy = "fredde-dev",
+                            TicketId = 1
+                        });
                 });
 
             modelBuilder.Entity("Shared.Models.TagModel", b =>
@@ -61,7 +70,19 @@ namespace BlazorTicketServerApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TagModel");
+                    b.ToTable("Tags");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "CSharp"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "JavaScript"
+                        });
                 });
 
             modelBuilder.Entity("Shared.Models.TicketModel", b =>
@@ -90,6 +111,16 @@ namespace BlazorTicketServerApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tickets");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "heheh",
+                            IsResolved = false,
+                            SubmittedBy = "fredrik",
+                            Title = "ticket 1"
+                        });
                 });
 
             modelBuilder.Entity("Shared.Models.TicketTag", b =>
@@ -105,6 +136,13 @@ namespace BlazorTicketServerApp.Migrations
                     b.HasIndex("TagId");
 
                     b.ToTable("TicketTag");
+
+                    b.HasData(
+                        new
+                        {
+                            TicketId = 1,
+                            TagId = 1
+                        });
                 });
 
             modelBuilder.Entity("Shared.Models.ResponseModel", b =>
