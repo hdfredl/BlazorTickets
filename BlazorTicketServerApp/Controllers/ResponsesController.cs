@@ -62,20 +62,26 @@ namespace BlazorTicketServerApp.Controllers
         [HttpPost]
         public async Task<IActionResult> PostResponseAsync(ResponseModel response)
         {
-            if (response != null)
+            if (response.Response == null || response.SubmittedBy == null)
             {
-                ResponseModel newResponse = new()
-                {
-                    Id = response.Id,
-                    Response = response.Response,
-                    SubmittedBy = response.SubmittedBy,
-                    TicketId = response.TicketId,
-                    Ticket = response.Ticket
-                };
-                await repo.AddResponseAsync(response);
-                return Ok();
+                return BadRequest("Response or user is empty!");
             }
-            return BadRequest();
+            await repo.AddResponseAsync(response);
+            return Ok();
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteResponseAsync(int id)
+        {
+            await repo.RemoveResponseAsync(id);
+            return Ok();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateResponse(ResponseModel response)
+        {
+            await repo.UpdateResponseAsync(response);
+            return Ok();
         }
     }
 }
