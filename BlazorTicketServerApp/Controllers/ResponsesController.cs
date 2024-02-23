@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BlazorTicketServerApp.Database;
+using BlazorTicketServerApp.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using Shared.Models;
 
 namespace BlazorTicketServerApp.Controllers
@@ -7,7 +9,11 @@ namespace BlazorTicketServerApp.Controllers
     [ApiController]
     public class ResponsesController : ControllerBase
     {
-
+        private readonly Repository repo;
+        public ResponsesController(AppDbContext dbContext)
+        {
+            repo = new(dbContext);
+        }
         public static List<ResponseModel> Responses { get; set; } = new()
         {
             new ResponseModel()
@@ -51,6 +57,25 @@ namespace BlazorTicketServerApp.Controllers
         {
             var filteredResponse = Responses.Where(Response => Response.TicketId == id).ToList();
             return Ok(filteredResponse);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PostResponseAsync(ResponseModel response)
+        {
+            if (response != null)
+            {
+                ResponseModel newResponse = new()
+                {
+                    Id = response.Id,
+                    Response = response.Response,
+                    SubmittedBy = response.SubmittedBy,
+                    TicketId = response.TicketId,
+                    Ticket = response.Ticket
+                };
+                await repo.AddResponseAsync(response);
+                return Ok();
+            }
+            return BadRequest();
         }
     }
 }
