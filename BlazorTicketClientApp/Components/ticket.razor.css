@@ -1,0 +1,27 @@
+﻿body {
+}
+
+.ticket {
+    padding:5px;
+    border: 2px solid red;
+    width:100%;
+    margin-top:5px;
+    display:flex;
+    flex-direction:column;
+}
+
+.ticket-info {
+    
+}
+
+.ticket-desc {
+    
+}
+
+.ticket-submit {
+    margin-left:20px;
+}
+
+.ticket-link {
+    margin-left:20px;
+}

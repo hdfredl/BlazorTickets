@@ -1,0 +1,28 @@
+﻿@using BlazorTicketClientApp.Models
+
+@if(TicketModel == null)
+{
+	<p>ViewModel is null</p>
+}
+else
+{
+	<div class="ticket">
+		<div class="ticket-info">
+			<p>
+				<strong class="ticket-title">@TicketModel.Title</strong>
+				<em class="ticket-submit">Submitted by:</em> @TicketModel.SubtmittedBy
+				<a class="ticket-link" href="/details/@TicketModel.Id">Read more</a>
+			</p>
+		</div>
+		<div class="ticket-desc">
+			<p><strong>Description: </strong>@TicketModel.Description</p>
+		</div>
+	</div>
+	
+}
+
+
+@code {
+	[Parameter]
+	public TicketViewModel? TicketModel { get; set; }
+}

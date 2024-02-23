@@ -1,12 +1,23 @@
 ﻿@page "/"
+@using BlazorTicketClientApp.Components
+@using BlazorTicketClientApp.Models
+@using BlazorTicketClientApp.Services
 @using Shared.Models
+@inject ITicketsService ticketsService
+<PageTitle>Home</PageTitle>
 
-<h1>Hello, please submit a ticket...</h1>
-
-Welcome to your new app.
-<br />
-
-    <!--Skapa en ticket, så input fält för modellerna osv -->
+<div id="main-body">
+	<h1 class="ticket-header">All tickets</h1>
+	<section class="all-tickets">
+		@foreach (TicketViewModel ticket in DummyData.Tickets)
+		{
+			<Ticket TicketModel="ticket"/>
+		}
+	</section>
+	<button @onclick="CreateTicket" class="create-ticket-btn">Create a new ticket</button>
+	@if(isCreatingTicket)
+	{
+		    <!--Skapa en ticket, så input fält för modellerna osv -->
 <div>
     <label>Title:</label>
     <input type="text" id="title" />
@@ -53,29 +64,29 @@ Welcome to your new app.
 <!-- Hämta o visa alla tickets från databasen, här kanske eller i ticketmanagement page.. hmm-->
 
 </div>
+	}
+</div>
+
+
+
 
 
 @code {
-    private Tag selectedTag;
+	private bool isCreatingTicket;
+	private List<TicketViewModel> tickets;
+  private Tag selectedTag;
 
-    // Tickets ska vara sorterade kronologist
+	protected override async Task OnInitializedAsync()
+	{
+		isCreatingTicket = false;
+		tickets = await ticketsService.GetAllAsync();
+	}
 
-
-
-
-
-    // Utveckla en återanvändbar komponent
-
-    // Skapa en ticket metod:
-    private async Task CreateTicket()
-    {
-
-    }
-
-
-
-    // Vid klick navigera till TicketManagement
-
- 
-
+	private void CreateTicket()
+	{
+		isCreatingTicket = !isCreatingTicket;
+	}
 }
+    
+
+
