@@ -7,12 +7,12 @@ namespace BlazorTicketClientApp.Services
 	{
 		public HttpClient Client { get; set; } = new()
 		{
-			BaseAddress = new Uri("https://localhost:7034")
+			BaseAddress = new Uri("https://localhost:7034/api/")
 		};
 
 		public async Task<List<TicketViewModel>> GetAllAsync()
 		{
-			var response = await Client.GetAsync("tickets");
+			var response = await Client.GetAsync("Tickets");
 			if (response.IsSuccessStatusCode)
 			{
 				string jsonResponse = await response.Content.ReadAsStringAsync();
