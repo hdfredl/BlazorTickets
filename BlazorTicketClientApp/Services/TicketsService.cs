@@ -63,21 +63,8 @@ namespace BlazorTicketClientApp.Services
 			};
 			try
 			{
+				var response = await Client.PostAsJsonAsync("Tickets/PostTicket", ticketToPost);
 
-
-				string jsonString = JsonConvert.SerializeObject(ticketToPost);
-
-				var response = await Client.PostAsJsonAsync("Tickets/PostTicket", jsonString);
-
-				if (response.IsSuccessStatusCode)
-				{
-					// Det funkade
-				}
-
-				else
-				{
-					//Funkade inte
-				}
 			}
 			catch (Exception ex)
 			{
