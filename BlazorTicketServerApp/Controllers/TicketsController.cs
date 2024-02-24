@@ -51,20 +51,28 @@ namespace BlazorTicketServerApp.Controllers
         };
 
         [HttpGet("GetAllTickets")]
-        public ActionResult<List<TicketModel>> GetTickets()
+        public async Task<ActionResult<List<TicketModel>>> GetTickets()
         {
-            repo.GetAllTicketsAsync().Wait();
-            return Ok(Tickets);
+            List<TicketModel> tickets = await repo.GetAllTicketsAsync();
+            if (tickets != null)
+            {
+                return Ok(tickets);
+            }
+            return BadRequest();
         }
 
-        [HttpGet("GetTicketById")]
+        [HttpGet("GetTicketById/{id}")]
         public async Task<IActionResult> GetTicketById(int id)
         {
-            await repo.GetTicketByIdAsync(id);
-            return Ok(Tickets);
+            TicketModel newTicket = await repo.GetTicketByIdAsync(id);
+            if (newTicket != null)
+            {
+                return Ok(newTicket);
+            }
+            return BadRequest();
         }
 
-        [HttpPost("PostTicket")]
+        [HttpPost]
         public async Task<IActionResult> PostTicketAsync(TicketModel ticket)
         {
             if (ticket.Title == null || ticket.Description == null)

@@ -46,17 +46,26 @@ namespace BlazorTicketServerApp.Controllers
             }
         };
 
-        [HttpGet("GetAll")]
-        public ActionResult<List<ResponseModel>> GetResponses()
+        [HttpGet("GetAllResponses")]
+        public async Task<ActionResult<List<ResponseModel>>> GetResponses()
         {
-            return Ok(Responses);
+            List<ResponseModel> responses = await repo.GetAllResponsesAsync();
+            if (responses != null)
+            {
+                return Ok(responses);
+            }
+            return BadRequest();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<List<ResponseModel>> GetResponsesByTicketId(int id)
+        public async Task<IActionResult> GetResponsesByTicketId(int id)
         {
-            var filteredResponse = Responses.Where(Response => Response.TicketId == id).ToList();
-            return Ok(filteredResponse);
+            List<ResponseModel> response = await repo.GetResponsesForTicketAsync(id);
+            if (response != null)
+            {
+                return Ok(response);
+            }
+            return BadRequest();
         }
 
         [HttpPost]

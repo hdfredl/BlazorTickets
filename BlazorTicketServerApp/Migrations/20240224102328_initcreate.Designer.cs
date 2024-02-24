@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorTicketServerApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240222210016_DataTest")]
-    partial class DataTest
+    [Migration("20240224102328_initcreate")]
+    partial class initcreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -80,11 +80,6 @@ namespace BlazorTicketServerApp.Migrations
                         {
                             Id = 1,
                             Name = "CSharp"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "JavaScript"
                         });
                 });
 
