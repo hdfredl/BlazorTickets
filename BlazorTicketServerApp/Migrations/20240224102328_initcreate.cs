@@ -5,13 +5,13 @@
 namespace BlazorTicketServerApp.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class initcreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "TagModel",
+                name: "Tags",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -20,7 +20,7 @@ namespace BlazorTicketServerApp.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TagModel", x => x.Id);
+                    table.PrimaryKey("PK_Tags", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -71,9 +71,9 @@ namespace BlazorTicketServerApp.Migrations
                 {
                     table.PrimaryKey("PK_TicketTag", x => new { x.TicketId, x.TagId });
                     table.ForeignKey(
-                        name: "FK_TicketTag_TagModel_TagId",
+                        name: "FK_TicketTag_Tags_TagId",
                         column: x => x.TagId,
-                        principalTable: "TagModel",
+                        principalTable: "Tags",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -83,6 +83,26 @@ namespace BlazorTicketServerApp.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Tags",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 1, "CSharp" });
+
+            migrationBuilder.InsertData(
+                table: "Tickets",
+                columns: new[] { "Id", "Description", "IsResolved", "SubmittedBy", "Title" },
+                values: new object[] { 1, "heheh", false, "fredrik", "ticket 1" });
+
+            migrationBuilder.InsertData(
+                table: "Responses",
+                columns: new[] { "Id", "Response", "SubmittedBy", "TicketId" },
+                values: new object[] { 1, "noob", "fredde-dev", 1 });
+
+            migrationBuilder.InsertData(
+                table: "TicketTag",
+                columns: new[] { "TagId", "TicketId" },
+                values: new object[] { 1, 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Responses_TicketId",
@@ -105,7 +125,7 @@ namespace BlazorTicketServerApp.Migrations
                 name: "TicketTag");
 
             migrationBuilder.DropTable(
-                name: "TagModel");
+                name: "Tags");
 
             migrationBuilder.DropTable(
                 name: "Tickets");
