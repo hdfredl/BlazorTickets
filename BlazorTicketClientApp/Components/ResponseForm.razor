@@ -34,6 +34,8 @@
 	public ResponseViewModel Response { get; set; } = new();
 	[Parameter]
 	public int ResponseForTicketId { get; set; }
+	[Parameter]
+	public EventCallback OnResponseSubmitted { get; set; }
 
 	public async Task HandleSubmit()
 	{
@@ -44,5 +46,10 @@
 				TicketId = ResponseForTicketId
 			};
 		await responsesService.PostResponseAsync(projectedResponse);
+
+		await OnResponseSubmitted.InvokeAsync();
+
+		Response = new();
+
 	}
 }

@@ -24,7 +24,7 @@ namespace BlazorTicketClientApp.Services
 
 				if (tickets != null)
 				{
-					return tickets;
+					return tickets.OrderByDescending(t => t.Id).ToList();
 				}
 
 				throw new JsonException();
