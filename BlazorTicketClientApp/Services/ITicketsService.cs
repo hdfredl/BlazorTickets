@@ -7,5 +7,7 @@ namespace BlazorTicketClientApp.Services
 		Task<List<TicketViewModel>> GetAllAsync();
 
 		Task PostTicketAsync(TicketViewModel ticket);
+
+		Task<TicketViewModel> GetTicketByIdAsync(int id);
 	}
 }

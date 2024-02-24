@@ -9,60 +9,20 @@
 <div id="main-body">
 	<h1 class="ticket-header">All tickets</h1>
 	<section class="all-tickets">
-		@foreach (TicketViewModel ticket in tickets)
+		@if(tickets != null)
 		{
-			<Ticket TicketModel="ticket"/>
+			@foreach (TicketViewModel ticket in tickets)
+			{
+				<Ticket TicketModel="ticket" />
+			}
 		}
+		
 	</section>
 	<button @onclick="CreateTicket" class="create-ticket-btn">Create a new ticket</button>
 	@if(isCreatingTicket)
 	{
-		    <!--Skapa en ticket, så input fält för modellerna osv -->
-		<div>
-			<label>Title:</label>
-			<input type="text" id="title" />
-			<br />
-		</div>
-		<br />
-		<div>
-			<label>Description:</label>
-			<textarea id="description"></textarea>
-			<br />
-		</div>
-		<br />
-		<div>
-			<label>Submitted By:</label>
-			<input type="text" id="submittedBy" />
-			<br />
-		</div>
-		<br />
-		<div>
-			<label>Is Resolved:</label>
-			<input type="checkbox" id="isResolved"/>
-			<br />
-		</div>
-
-		<div>
-			<br />
-			<label>Select a Tag:</label>
-			<select id="selectedTag" @bind="selectedTag">
-				<option value="">---</option>
-				@foreach (Tag tag in Enum.GetValues(typeof(Tag)))
-				{
-					<option value="@tag">@tag.ToString()</option>
-				}
-			</select>
-			<br />
-		</div>
-
-		<br />
-		  <br />
-
-		<button class="btn btn-primary" @onclick="CreateTicket">Create Ticket</button>
-
-		<div>
-		<!-- Hämta o visa alla tickets från databasen, här kanske eller i ticketmanagement page.. hmm-->
-
+		<div class="form-box">
+			<TicketForm />
 		</div>
 	}
 </div>
@@ -75,6 +35,7 @@
 	private bool isCreatingTicket;
 	private List<TicketViewModel> tickets;
 	private Tag selectedTag;
+	public TicketViewModel Ticket { get; set; } = new();
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -86,6 +47,7 @@
 	{
 		isCreatingTicket = !isCreatingTicket;
 	}
+
 }
     
 

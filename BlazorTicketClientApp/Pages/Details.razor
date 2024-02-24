@@ -1,21 +1,34 @@
 ﻿@page "/details/{id:int}"
+@using BlazorTicketClientApp.Components
 @using BlazorTicketClientApp.Models
+@using BlazorTicketClientApp.Services
 @using Shared.Models
+@inject ITicketsService ticketsService
 
-<h3>Ticket</h3>
+
 
 @if(ticket != null)
 {
-	<h1>@ticket.Title</h1>
+	<Ticket TicketModel="ticket"/>
 }
+@if(responses != null) 
+{
+	@foreach (var response in responses)
+	{
+		<Response ResponseViewModel="response" />
+	}
+}
+
 
 @code {
 	[Parameter]
 	public int? Id { get; set; }
 	private TicketViewModel? ticket;
+	private List<ResponseViewModel>? responses;
 
-	protected override void OnParametersSet()
+	protected override async Task OnParametersSetAsync()
 	{
-		ticket = DummyData.Tickets.FirstOrDefault(t => t.Id == Id);
+		ticket = await ticketsService.GetTicketByIdAsync((int)Id);
+		responses = DummyData.Responses;
 	}
 }

@@ -1,0 +1,24 @@
+﻿@using BlazorTicketClientApp.Models
+
+@if (ResponseViewModel == null)
+{
+	<p>ViewModel is null</p>
+}
+else
+{
+	<div class="response">
+		<div class="response-desc">
+			<p><strong>Response: </strong>@ResponseViewModel.Response</p>
+		</div>
+		<div class="response-info">
+			<p>
+				<em class="response-submit">Submitted by:</em>@ResponseViewModel.SubmittedBy
+			</p>
+		</div>
+	</div>
+}
+
+@code {
+	[Parameter]
+	public ResponseViewModel? ResponseViewModel { get; set; }
+}

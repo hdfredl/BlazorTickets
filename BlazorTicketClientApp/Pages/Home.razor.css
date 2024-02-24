@@ -7,8 +7,18 @@
 
 .all-tickets {
     width:80%;
+    overflow-y: auto;
+    max-height:500px;
 }
 
 .create-ticket-btn {
     margin-top:1rem
+}
+
+.form-box {
+    flex-direction:row;
+    align-self:center;
+    width:60%;
+    margin-top:10px;
+
 }
