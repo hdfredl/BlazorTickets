@@ -4,6 +4,7 @@
 @using BlazorTicketClientApp.Services
 @using Shared.Models
 @inject ITicketsService ticketsService
+@inject IResponsesService responsesService
 
 
 
@@ -19,16 +20,31 @@
 	}
 }
 
+<button @onclick="CreateResponse" class="create-ticket-btn">Create a new ticket</button>
+@if(isCreatingResponse && ticket != null)
+{
+	<div class="form-box">
+		<ResponseForm ResponseForTicketId="@ticket.Id"/>
+	</div>
+}
+
 
 @code {
 	[Parameter]
 	public int? Id { get; set; }
 	private TicketViewModel? ticket;
 	private List<ResponseViewModel>? responses;
+	private bool isCreatingResponse;
 
 	protected override async Task OnParametersSetAsync()
 	{
+		isCreatingResponse = false;
 		ticket = await ticketsService.GetTicketByIdAsync((int)Id);
-		responses = DummyData.Responses;
+		responses = await responsesService.GetResponesToTicketAsync((int)Id);
+	}
+
+	private void CreateResponse()
+	{
+		isCreatingResponse = !isCreatingResponse;
 	}
 }

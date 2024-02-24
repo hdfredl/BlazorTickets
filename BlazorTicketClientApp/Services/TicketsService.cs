@@ -5,12 +5,12 @@ using System.Net.Http.Json;
 
 namespace BlazorTicketClientApp.Services
 {
-    public class TicketsService : ITicketsService
-    {
-        public HttpClient Client { get; set; } = new()
-        {
-            BaseAddress = new Uri("https://localhost:7034/api/")
-        };
+	public class TicketsService : ITicketsService
+	{
+		public HttpClient Client { get; set; } = new()
+		{
+			BaseAddress = new Uri("https://localhost:7034/api/")
+		};
 
 
 		public async Task<List<TicketViewModel>> GetAllAsync()
@@ -20,17 +20,17 @@ namespace BlazorTicketClientApp.Services
 			{
 				string jsonResponse = await response.Content.ReadAsStringAsync();
 
-                List<TicketViewModel> tickets = JsonConvert.DeserializeObject<List<TicketViewModel>>(jsonResponse);
+				List<TicketViewModel> tickets = JsonConvert.DeserializeObject<List<TicketViewModel>>(jsonResponse);
 
-                if (tickets != null)
-                {
-                    return tickets;
-                }
+				if (tickets != null)
+				{
+					return tickets;
+				}
 
-                throw new JsonException();
-            }
-            throw new HttpRequestException();
-        }
+				throw new JsonException();
+			}
+			throw new HttpRequestException();
+		}
 
 		public async Task<TicketViewModel> GetTicketByIdAsync(int id)
 		{

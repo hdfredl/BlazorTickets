@@ -1,0 +1,48 @@
+﻿@using BlazorTicketClientApp.Models
+@using BlazorTicketClientApp.Services
+@using Shared.Models
+@inject IResponsesService responsesService
+
+<div class="form">
+	<EditForm Model="Response" OnSubmit="HandleSubmit">
+		<div class="inner-form">
+			<div class="labels">
+				<div class="form-row">
+					<label>Response: </label>
+				</div>
+				<div class="form-row">
+					<label>Submitted by: </label>
+				</div>
+			</div>
+			<div class="inputs">
+				<div class="form-row">
+					<InputTextArea @bind-Value="Response.Response"></InputTextArea>
+				</div>
+				<div class="form-row">
+					<InputText @bind-Value="Response.SubmittedBy"></InputText>
+				</div>
+			</div>
+		</div>
+		<div class="submit-btn">
+			<button type="submit">Submit</button>
+		</div>
+
+	</EditForm>
+</div>
+
+@code {
+	public ResponseViewModel Response { get; set; } = new();
+	[Parameter]
+	public int ResponseForTicketId { get; set; }
+
+	public async Task HandleSubmit()
+	{
+		ResponseModel projectedResponse = new()
+			{
+				Response = Response.Response,
+				SubmittedBy = Response.SubmittedBy,
+				TicketId = ResponseForTicketId
+			};
+		await responsesService.PostResponseAsync(projectedResponse);
+	}
+}
