@@ -50,32 +50,35 @@ namespace BlazorTicketServerApp.Controllers
 			},
 		};
 
-		[HttpGet("GetAllTickets")]
-		public async Task<ActionResult<List<TicketModel>>> GetTickets()
-		{
-			List<TicketModel> tickets = await repo.GetAllTicketsAsync();
-			//Bad request om vi inte får något
-			if (tickets == null) return BadRequest();
-			return Ok(tickets);
-		}
+    [HttpGet("GetAllTickets")]
+    public async Task<ActionResult<List<TicketModel>>> GetTickets()
+    {
+        List<TicketModel> tickets = await repo.GetAllTicketsAsync();
+        if (tickets != null)
+        {
+            return Ok(tickets);
+        }
+        return BadRequest();
+    }
 
-		[HttpGet("GetTicketById/{id}")]
-		public async Task<ActionResult<TicketModel>> GetTicketById(int id)
-		{
-			TicketModel? ticket = await repo.GetTicketByIdAsync(id);
-			//Bad request om vi inte får något
-			if (ticket == null) return BadRequest();
-			return Ok(ticket);
-		}
+    [HttpGet("GetTicketById/{id}")]
+    public async Task<IActionResult> GetTicketById(int id)
+    {
+        TicketModel newTicket = await repo.GetTicketByIdAsync(id);
+        if (newTicket != null)
+        {
+            return Ok(newTicket);
+        }
+        return BadRequest();
+    }
 
-		[HttpPost("PostTicket")]
-		public async Task<IActionResult> PostTicketAsync(TicketModel ticket)
-		{
-			if (ticket.Title == null || ticket.Description == null)
-			{
-				return BadRequest("Ticket must contain title and description!");
-			}
-
+    [HttpPost]
+    public async Task<IActionResult> PostTicketAsync(TicketModel ticket)
+    {
+        if (ticket.Title == null || ticket.Description == null)
+        {
+            return BadRequest("Ticket must contain title and description!");
+        }
 			await repo.AddTicketAsync(ticket);
 			return Ok(ticket);
 		}
