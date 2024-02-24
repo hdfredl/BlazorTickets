@@ -1,0 +1,35 @@
+﻿body {
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+    padding: 5px;
+    width: 100%;
+}
+
+.form-row {
+    margin-top: 5px;
+}
+
+.labels {
+    flex-direction: column;
+    justify-content: space-between;
+    display: flex;
+    margin-right: 10px;
+    align-items: center;
+}
+
+.inner-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.submit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}

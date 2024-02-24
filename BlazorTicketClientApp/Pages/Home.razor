@@ -22,11 +22,10 @@
 	@if(isCreatingTicket)
 	{
 		<div class="form-box">
-			<TicketForm />
+			<TicketForm OnTicketSubmitted="HandleTicketSubmitted"/>
 		</div>
 	}
 </div>
-
 
 
 
@@ -48,6 +47,10 @@
 		isCreatingTicket = !isCreatingTicket;
 	}
 
+	private async Task HandleTicketSubmitted()
+	{
+		tickets = await ticketsService.GetAllAsync();
+	}
 }
     
 

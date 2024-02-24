@@ -1,0 +1,38 @@
+﻿body {
+}
+
+#main-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-ticket {
+    width:100%;
+}
+
+.responses {
+    width: 80%;
+    overflow-y: auto;
+    max-height: 500px;
+    display:flex;
+    flex-direction:column;
+}
+
+.create-ticket-btn {
+    margin-top: 1rem
+}
+
+.form-box {
+    flex-direction: row;
+    align-self: center;
+    width: 60%;
+    margin-top: 10px;
+}
+
+.no-response {
+    margin-top:20px;
+    align-self: center;
+    justify-self:center;
+}

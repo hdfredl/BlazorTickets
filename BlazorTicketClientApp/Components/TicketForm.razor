@@ -38,9 +38,15 @@
 
 @code {
 	public TicketViewModel Ticket { get; set; } = new();
+	[Parameter]
+	public EventCallback OnTicketSubmitted { get; set; }
 
 	public async Task HandleSubmit()
 	{
 		await ticketsService.PostTicketAsync(Ticket);
+
+		await OnTicketSubmitted.InvokeAsync();
+
+		Ticket = new();
 	}
 }

@@ -4,20 +4,39 @@
 @using BlazorTicketClientApp.Services
 @using Shared.Models
 @inject ITicketsService ticketsService
+@inject IResponsesService responsesService
 
+<div id="main-body">
 
+	<section class="main-ticket">
+		@if (ticket != null)
+		{
+			<Ticket TicketModel="ticket" />
+		}
 
-@if(ticket != null)
-{
-	<Ticket TicketModel="ticket"/>
-}
-@if(responses != null) 
-{
-	@foreach (var response in responses)
+	</section>
+	<section class="responses">
+		@if (responses != null)
+		{
+			@foreach (var response in responses)
+			{
+				<Response ResponseViewModel="response" />
+			}
+		}
+		@if(noResponses)
+		{
+			<h4 class="no-response"><em>No responses</em></h4>
+		}
+	</section>
+	<button @onclick="CreateResponse" class="create-ticket-btn">Respond</button>
+	@if (isCreatingResponse && ticket != null)
 	{
-		<Response ResponseViewModel="response" />
+		<div class="form-box">
+			<ResponseForm ResponseForTicketId="@ticket.Id" OnResponseSubmitted="HandleResponseSubmitted" />
+		</div>
 	}
-}
+</div>
+
 
 
 @code {
@@ -25,10 +44,38 @@
 	public int? Id { get; set; }
 	private TicketViewModel? ticket;
 	private List<ResponseViewModel>? responses;
+	private bool isCreatingResponse;
+	private bool noResponses = false;
 
 	protected override async Task OnParametersSetAsync()
 	{
+		isCreatingResponse = false;
 		ticket = await ticketsService.GetTicketByIdAsync((int)Id);
-		responses = DummyData.Responses;
+		await UpdateResponses();
+	}
+
+	private void CreateResponse()
+	{
+		isCreatingResponse = !isCreatingResponse;
+	}
+
+	private async Task HandleResponseSubmitted()
+	{
+		await UpdateResponses();
+		CreateResponse();
+	}
+
+	private async Task UpdateResponses()
+	{
+		responses = await responsesService.GetResponesToTicketAsync((int)Id);
+
+		if (responses == null || responses.Count < 1)
+		{
+			noResponses = true;
+		}
+		else
+		{
+			noResponses = false;
+		}
 	}
 }
