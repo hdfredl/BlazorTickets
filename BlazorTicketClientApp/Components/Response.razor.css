@@ -1,0 +1,20 @@
+﻿body {
+}
+
+.response {
+    padding: 5px;
+    border: 2px solid black;
+    width: 80%;
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+p {
+    padding:0;
+    margin:2px;
+}
+
+.response-info {
+    font-size:14px;
+}

@@ -1,0 +1,43 @@
+﻿@using BlazorTicketClientApp.Models
+@using BlazorTicketClientApp.Services
+@inject ITicketsService ticketsService
+
+<div class="form">
+	<EditForm Model="Ticket" OnSubmit="HandleSubmit">
+		<div class="inner-form">
+			<div class="labels">
+				<div class="form-row">
+					<label>Title: </label>
+				</div>
+				<div class="form-row">
+					<label>Descrpition: </label>
+				</div>
+				<div class="form-row">
+					<label>Submitted by: </label>
+				</div>
+			</div>
+			<div class="inputs">
+				<div class="form-row">
+					<InputText @bind-Value="Ticket.Title"></InputText>
+				</div>
+				<div class="form-row">
+					<InputTextArea @bind-Value="Ticket.Description"></InputTextArea>
+				</div>
+				<div class="form-row">
+					<InputText @bind-Value="Ticket.SubtmittedBy"></InputText>
+				</div>
+			</div>
+		</div>
+		<button type="submit">Submit</button>
+	</EditForm>
+</div>
+
+
+@code {
+	public TicketViewModel Ticket { get; set; } = new();
+
+	public async Task HandleSubmit()
+	{
+		await ticketsService.PostTicketAsync(Ticket);
+	}
+}

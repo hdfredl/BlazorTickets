@@ -77,11 +77,6 @@ namespace BlazorTicketServerApp.Migrations
                         {
                             Id = 1,
                             Name = "CSharp"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "JavaScript"
                         });
                 });
 
