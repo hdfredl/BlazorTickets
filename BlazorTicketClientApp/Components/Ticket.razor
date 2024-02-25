@@ -1,4 +1,6 @@
 ﻿@using BlazorTicketClientApp.Models
+@using BlazorTicketClientApp.Services
+@inject ITicketsService ticketsService
 
 @if(TicketModel == null)
 {
@@ -8,11 +10,20 @@ else
 {
 	<div class="ticket">
 		<div class="ticket-info">
-			<p>
+			<div>
+				<p>
 				<strong class="ticket-title">@TicketModel.Title</strong>
 				<em class="ticket-submit">Submitted by:</em> @TicketModel.SubtmittedBy
 				<a class="ticket-link" href="/details/@TicketModel.Id">Read more</a>
-			</p>
+				</p>
+			</div>
+			<div>
+				@if(AbleToDelete)
+				{
+					<button @onclick="HandleDelete">Delete</button>
+				}
+				
+			</div>
 		</div>
 		<div class="ticket-desc">
 			<p><strong>Description: </strong>@TicketModel.Description</p>
@@ -25,4 +36,15 @@ else
 @code {
 	[Parameter]
 	public TicketViewModel? TicketModel { get; set; }
+	[Parameter]
+	public EventCallback OnDelete { get; set; }
+	[Parameter]
+	public bool AbleToDelete { get; set; }
+	
+	
+	private async void HandleDelete()
+	{
+		await ticketsService.DeleteTicket(TicketModel.Id);
+		await OnDelete.InvokeAsync();
+	}
 }

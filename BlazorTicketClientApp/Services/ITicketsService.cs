@@ -9,5 +9,7 @@ namespace BlazorTicketClientApp.Services
 		Task PostTicketAsync(TicketViewModel ticket);
 
 		Task<TicketViewModel> GetTicketByIdAsync(int id);
+
+		Task DeleteTicket(int id);
 	}
 }
