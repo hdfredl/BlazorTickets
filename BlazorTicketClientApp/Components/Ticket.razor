@@ -2,6 +2,7 @@
 @using BlazorTicketClientApp.Services
 @inject ITicketsService ticketsService
 
+
 @if(TicketModel == null)
 {
 	<p>ViewModel is null</p>
@@ -28,6 +29,13 @@ else
 		<div class="ticket-desc">
 			<p><strong>Description: </strong>@TicketModel.Description</p>
 		</div>
+		<!--Resolved - displaya av vem och vad -->
+		<div>
+			<p>
+				T. Nr: @TicketModel.Id: Resolved : @TicketModel.IsResolved 
+			</p>
+		</div>
+
 	</div>
 	
 }
@@ -36,6 +44,8 @@ else
 @code {
 	[Parameter]
 	public TicketViewModel? TicketModel { get; set; }
+	[Parameter]
+	public bool IsResolved { get; set; } 
 	[Parameter]
 	public EventCallback OnDelete { get; set; }
 	[Parameter]
@@ -48,3 +58,4 @@ else
 		await OnDelete.InvokeAsync();
 	}
 }
+

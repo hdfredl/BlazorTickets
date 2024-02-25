@@ -1,7 +1,7 @@
-﻿using BlazorTicketClientApp.Models;
+﻿using System.Net.Http.Json;
+using BlazorTicketClientApp.Models;
 using Newtonsoft.Json;
 using Shared.Models;
-using System.Net.Http.Json;
 
 namespace BlazorTicketClientApp.Services
 {
@@ -27,6 +27,20 @@ namespace BlazorTicketClientApp.Services
 
 				if (responses != null)
 				{
+					// se om det finns responses,Gå igenom alla tickets, hämta o ändra till true om finns eller falase om ej
+					foreach (var ticket in responses)
+					{
+						if (ticket.Response != null && ticket.Response.Any())
+						{
+							ticket.IsResolved = true;
+
+						}
+						else
+						{
+							ticket.IsResolved = false;
+						}
+						Console.WriteLine($"Ticket Id: {ticket.Id}, Initial IsResolved: {ticket.IsResolved}, Responses Count: {ticket.Response}");
+					}
 					return responses;
 				}
 

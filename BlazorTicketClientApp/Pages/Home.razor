@@ -4,7 +4,30 @@
 @using BlazorTicketClientApp.Services
 @using Shared.Models
 @inject ITicketsService ticketsService
+@inject IResponsesService responsesService
 <PageTitle>Home</PageTitle>
+
+<!--En search bar, diskutera med Otto-->
+<input type="text" value="" @oninput="SearchInput" placeholder="Search" />
+
+<div id="searhBar">
+	<p class= "searchBar">SearchBar</p>
+	@if (searchedTickets != null && searchedTickets.Any())
+	{
+		foreach(var ticket in searchedTickets)
+		{
+			<div>
+				<Ticket TicketModel="ticket" />
+			</div>
+		}
+
+	}
+	else
+	{
+		<p>No tickets founds</p>
+	}
+</div>
+<!--En search bar, diskutera med Otto-->
 
 <div id="main-body">
 	<h1 class="ticket-header">All tickets</h1>
@@ -35,6 +58,12 @@
 	private List<TicketViewModel> tickets;
 	private Tag selectedTag;
 	public TicketViewModel Ticket { get; set; } = new();
+	// Göra en list för searchbar
+	public List<TicketViewModel> searchedTickets;
+	private string searchBar = "";
+	private ITicketsService TicketsService = new TicketsService();
+
+	
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -61,6 +90,35 @@
 	{
 		tickets = await ticketsService.GetAllAsync();
 	}
+
+	//------------- SEARCHBAR
+	// gör en search bar för att hitta tickets.
+	private async Task SearchInput(ChangeEventArgs search)
+	{
+		// populera searchBar med ChangeEventArgs
+		searchBar = search.Value.ToString();
+		await UpdateList();
+	}
+
+
+	// gör en dynamisk update metod som uppdaterar hela searchinputen
+	private async Task UpdateList()
+	{
+		// Hämta API eller Ticket - ViewModel?
+		if(string.IsNullOrEmpty(searchBar))
+		{
+			searchedTickets = await TicketsService.GetAllAsync();
+		}
+		else
+		{
+			// hämta från API
+			var allTickets = await TicketsService.GetAllAsync();
+			searchedTickets = allTickets.Where(s => s.Title.Contains(searchBar, StringComparison.OrdinalIgnoreCase)).ToList();
+
+			//searchedTickets = TicketsService.GetAllAsync.Where(s => s.Title.Contains(searchBar, StringComparison.OrdinalIgnoreCase)).ToList();
+		}
+	}
+	
 }
     
 

@@ -6,5 +6,7 @@
 		public string? Response { get; set; }
 		public string? SubmittedBy { get; set; }
 
+		// Test:
+		public bool? IsResolved { get; set; }
 	}
 }

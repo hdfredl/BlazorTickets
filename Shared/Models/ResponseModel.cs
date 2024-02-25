@@ -8,4 +8,5 @@ public class ResponseModel
 	public int TicketId { get; set; }
 	public TicketModel? Ticket { get; set; }
 
+
 }
