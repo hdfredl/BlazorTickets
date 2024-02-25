@@ -88,5 +88,9 @@ namespace BlazorTicketClientApp.Services
 
 		}
 
+		public async Task DeleteTicket(int id)
+		{
+			await Client.DeleteAsync($"Tickets?id={id}");
+		}
 	}
 }
