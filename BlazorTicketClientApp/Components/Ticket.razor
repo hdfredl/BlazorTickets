@@ -1,4 +1,5 @@
 ﻿@using BlazorTicketClientApp.Models
+@using BlazorTicketClientApp.Services
 
 @if(TicketModel == null)
 {
@@ -17,6 +18,13 @@ else
 		<div class="ticket-desc">
 			<p><strong>Description: </strong>@TicketModel.Description</p>
 		</div>
+		<!--Resolved - displaya av vem och vad -->
+		<div>
+			<p>
+				T. Nr: @TicketModel.Id: Resolved : @TicketModel.IsResolved 
+			</p>
+		</div>
+
 	</div>
 	
 }
@@ -25,4 +33,17 @@ else
 @code {
 	[Parameter]
 	public TicketViewModel? TicketModel { get; set; }
+
+	// Sätt IsResolved till true om den har en respons annars false. För att användaren ska se om den är resolved eller ej.
+	//public TicketViewModel? IsResolved;
+
+	[Parameter]
+	public bool IsResolved { get; set; } 
+
+	private List<ResponseViewModel> responses;
+	[Inject]
+	private IResponsesService responsesService { get; set; }
+
+
 }
+

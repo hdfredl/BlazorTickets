@@ -1,7 +1,7 @@
-﻿using BlazorTicketClientApp.Models;
+﻿using System.Net.Http.Json;
+using BlazorTicketClientApp.Models;
 using Newtonsoft.Json;
 using Shared.Models;
-using System.Net.Http.Json;
 
 namespace BlazorTicketClientApp.Services
 {
@@ -11,7 +11,6 @@ namespace BlazorTicketClientApp.Services
 		{
 			BaseAddress = new Uri("https://localhost:7034/api/")
 		};
-
 
 		public async Task<List<TicketViewModel>> GetAllAsync()
 		{
@@ -24,6 +23,21 @@ namespace BlazorTicketClientApp.Services
 
 				if (tickets != null)
 				{
+					// se om det finns responses,Gå igenom alla tickets, hämta o ändra till true om finns eller falase om ej
+					foreach (var ticket in tickets)
+					{
+						if (ticket.Responses != null && ticket.Responses.Any())
+						{
+							ticket.IsResolved = true;
+
+						}
+						else
+						{
+							ticket.IsResolved = false;
+						}
+						Console.WriteLine($"Ticket Id: {ticket.Id}, Initial IsResolved: {ticket.IsResolved}, Responses Count: {ticket.Responses}");
+					}
+
 					return tickets.OrderByDescending(t => t.Id).ToList();
 				}
 
@@ -73,5 +87,6 @@ namespace BlazorTicketClientApp.Services
 			}
 
 		}
+
 	}
 }
