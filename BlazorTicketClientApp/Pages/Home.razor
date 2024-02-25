@@ -13,7 +13,7 @@
 		{
 			@foreach (TicketViewModel ticket in tickets)
 			{
-				<Ticket TicketModel="ticket" />
+				<Ticket TicketModel="ticket" OnDelete="HandleDelete" AbleToDelete="true"/>
 			}
 		}
 		
@@ -39,7 +39,7 @@
 	protected override async Task OnInitializedAsync()
 	{
 		isCreatingTicket = false;
-		tickets = await ticketsService.GetAllAsync();
+		await UpdateTickets();
 	}
 
 	private void CreateTicket()
@@ -48,6 +48,16 @@
 	}
 
 	private async Task HandleTicketSubmitted()
+	{
+		await UpdateTickets();
+	}
+
+	private async Task HandleDelete()
+	{
+		await UpdateTickets();
+	}
+
+	private async Task UpdateTickets()
 	{
 		tickets = await ticketsService.GetAllAsync();
 	}

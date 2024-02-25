@@ -13,6 +13,7 @@ namespace BlazorTicketClientApp.Services
 		};
 
 
+
 		public async Task<List<TicketViewModel>> GetAllAsync()
 		{
 			var response = await Client.GetAsync("Tickets/GetAllTickets");
@@ -72,6 +73,11 @@ namespace BlazorTicketClientApp.Services
 				Console.WriteLine(ex.Message);
 			}
 
+		}
+
+		public async Task DeleteTicket(int id)
+		{
+			await Client.DeleteAsync($"Tickets?id={id}");
 		}
 	}
 }
