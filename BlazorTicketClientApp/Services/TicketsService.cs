@@ -23,20 +23,6 @@ namespace BlazorTicketClientApp.Services
 
 				if (tickets != null)
 				{
-					// se om det finns responses,Gå igenom alla tickets, hämta o ändra till true om finns eller falase om ej
-					foreach (var ticket in tickets)
-					{
-						if (ticket.Responses != null && ticket.Responses.Any())
-						{
-							ticket.IsResolved = true;
-
-						}
-						else
-						{
-							ticket.IsResolved = false;
-						}
-						Console.WriteLine($"Ticket Id: {ticket.Id}, Initial IsResolved: {ticket.IsResolved}, Responses Count: {ticket.Responses}");
-					}
 
 					return tickets.OrderByDescending(t => t.Id).ToList();
 				}
@@ -95,7 +81,17 @@ namespace BlazorTicketClientApp.Services
 
 		public async Task UpdateTicket(TicketViewModel ticket)
 		{
-			await Client.PutAsJsonAsync("Tickets", ticket);
+			TicketModel updatedTicket = new()
+			{
+				Id = ticket.Id,
+				Title = ticket.Title,
+				SubmittedBy = ticket.SubtmittedBy,
+				Description = ticket.Description,
+				IsResolved = ticket.IsResolved
+			};
+			var response = await Client.PutAsJsonAsync("Tickets", updatedTicket);
+
+			Console.WriteLine(response);
 		}
 	}
 }
