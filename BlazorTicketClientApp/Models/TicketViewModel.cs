@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Shared.Models;
 
 namespace BlazorTicketClientApp.Models
 {
@@ -10,12 +9,12 @@ namespace BlazorTicketClientApp.Models
 		public string? Description { get; set; }
 		[JsonProperty("submittedBy")]
 		public string? SubtmittedBy { get; set; }
-		public bool? IsResolved { get; set; }
+		public bool IsResolved { get; set; }
 		//Gjorde tag bara som en string i min TicketViewModel
-		public string? Tag { get; set; }
+		//public string? Tag { get; set; }
 
 		// För att hämta resonses
-		public List<TicketModel>? Responses { get; set; }
+		//public List<TicketModel>? Responses { get; set; }
 
 	}
 }

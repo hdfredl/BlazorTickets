@@ -54,7 +54,7 @@ public class Repository
 		{
 			updateTicket.Description = ticket.Description;
 			// GÖR SÅ ATT BOOL KAN ÄNDRAS ISRESOLVED TRUE ELLE FALASE
-			updateTicket.IsResolved = updateTicket.IsResolved;
+			updateTicket.IsResolved = ticket.IsResolved;
 		}
 		await _context.SaveChangesAsync();
 	}
