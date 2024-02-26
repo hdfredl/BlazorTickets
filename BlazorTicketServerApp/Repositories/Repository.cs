@@ -54,6 +54,7 @@ public class Repository
 		{
 			updateTicket.Description = ticket.Description;
 			// GÖR SÅ ATT BOOL KAN ÄNDRAS ISRESOLVED TRUE ELLE FALASE
+			updateTicket.IsResolved = updateTicket.IsResolved;
 		}
 		await _context.SaveChangesAsync();
 	}
@@ -109,6 +110,7 @@ public class Repository
 		if (updateResponse != null)
 		{
 			updateResponse.Response = response.Response;
+
 
 			await _context.SaveChangesAsync();
 		}
