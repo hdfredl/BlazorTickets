@@ -23,6 +23,10 @@ else
 				{
 					<button @onclick="HandleDelete">Delete</button>
 				}
+				else
+				{
+					<button @onclick="HandleResolve">Is resolved!</button>
+				}
 				
 			</div>
 		</div>
@@ -50,12 +54,18 @@ else
 	public EventCallback OnDelete { get; set; }
 	[Parameter]
 	public bool AbleToDelete { get; set; }
-	
-	
-	private async void HandleDelete()
+
+
+	private async Task HandleDelete()
 	{
 		await ticketsService.DeleteTicket(TicketModel.Id);
 		await OnDelete.InvokeAsync();
+	}
+
+	private async Task HandleResolve()
+	{
+		TicketModel.IsResolved = !TicketModel.IsResolved;
+		await ticketsService.UpdateTicket(TicketModel);
 	}
 }
 

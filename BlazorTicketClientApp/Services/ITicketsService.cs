@@ -11,5 +11,7 @@ namespace BlazorTicketClientApp.Services
 		Task<TicketViewModel> GetTicketByIdAsync(int id);
 
 		Task DeleteTicket(int id);
+
+		Task UpdateTicket(TicketViewModel ticket);
 	}
 }
