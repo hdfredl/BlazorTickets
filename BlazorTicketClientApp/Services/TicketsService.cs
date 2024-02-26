@@ -1,7 +1,7 @@
-﻿using System.Net.Http.Json;
-using BlazorTicketClientApp.Models;
+﻿using BlazorTicketClientApp.Models;
 using Newtonsoft.Json;
 using Shared.Models;
+using System.Net.Http.Json;
 
 namespace BlazorTicketClientApp.Services
 {
@@ -91,6 +91,11 @@ namespace BlazorTicketClientApp.Services
 		public async Task DeleteTicket(int id)
 		{
 			await Client.DeleteAsync($"Tickets?id={id}");
+		}
+
+		public async Task UpdateTicket(TicketViewModel ticket)
+		{
+			await Client.PutAsJsonAsync("Tickets", ticket);
 		}
 	}
 }
